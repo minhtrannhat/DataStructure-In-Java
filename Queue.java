@@ -46,7 +46,7 @@ public class Queue{
 
         System.out.println("Enqueueing " + item);
 
-        items[front + size] = item;
+        items[(front + size) % items.length] = item;
         size++;
     }
 
@@ -56,7 +56,7 @@ public class Queue{
 
         else{
             int dequeuedItem = items[front] ;
-            front = (front + 1) % size;
+            front = (front + 1) % items.length;
             size--;
             return dequeuedItem;
         }
