@@ -29,37 +29,37 @@ public class Queue{
     private int capacity = 4;
     int size = 0;
 
+    // initialize empty array queue
     private int[] items = new int[capacity];
 
     // front is the index of the first item on the queue
     private int front = 0;
 
-    // back is the index of the last item on the queue.  -1 indicates empty queue
-    private int back = -1;
-
+    // return the size of the queue
     public int size() {
         return size;
     }
 
-    public void enqueue(int item) {
-        if (size == capacity)
-            expandCapacity();
+    public void enqueue(int item) throws FullQueueException {
+
+        if (size == capacity) throw new FullQueueException();
+
         System.out.println("Enqueueing " + item);
+
+        items[front + size] = item;
         size++;
-        back = (back + 1)%capacity; // wraparound
-        items[back] = item;
     }
 
     public int dequeue() throws EmptyQueueException {
+
         if (size == 0) throw new EmptyQueueException();
-        int answer = items[front++];
-        size--;
-        if (size == 0) {
-            front = 0;
-            back = -1;
+
+        else{
+            int dequeuedItem = items[front] ;
+            front = (front + 1) % size;
+            size--;
+            return dequeuedItem;
         }
-        if (front == capacity) front = 0;
-        return answer;
     }
 
     public int peek() throws EmptyQueueException {
@@ -67,30 +67,20 @@ public class Queue{
         return items[front];
     }
 
-    private void expandCapacity() {
-        System.out.println("Calling expandCapacity. The array will now be doubled in size. The old size is " + size);
-        int oldCapacity = capacity;
-        capacity *= 2;
-        int[] newItems = new int[capacity];
-        for (int i=0; i<size; i++) {
-            newItems[i] = items[front++];
-            if (front == oldCapacity) front = 0;
-        }
-        items = newItems;
-        front = 0;
-        back = size - 1;
-    }
-
     public String toString() {
+
         if (size == 0)
-            return "[ ]" + " front: " + front + " || back: " + back + " || size: " + size + " || capacity: " + capacity;
+            return "[ ]" + " front: " + front + " || size: " + size + " || capacity: " + capacity;
+
         String answer = "[ ";
+
         int position = front;
+
         for (int i=0; i<size; i++) {
             answer += items[position++] + " ";
             if (position == capacity) position = 0;
         }
-        return answer + "] front: " + front + " || back: " + back + " || size: " + size + " ||capacity: " + capacity;
+        return answer + "] front: " + front + " || size: " + size + " ||capacity: " + capacity;
     }
 
     private static class EmptyQueueException extends Exception{
@@ -105,7 +95,19 @@ public class Queue{
         }
     }
 
-    public static void main(String[ ] args) throws EmptyQueueException {
+    private static class FullQueueException extends Exception{
+        private String message;
+        public FullQueueException(){
+            this.message = "This queue is already full";
+        }
+
+        @Override
+        public String getMessage(){
+            return message;
+        }
+    }
+
+    public static void main(String[ ] args) throws EmptyQueueException, FullQueueException {
 
         Queue q = new Queue();
         Scanner console = new Scanner(System.in);
