@@ -55,10 +55,10 @@ public class Queue{
         if (size == 0) throw new EmptyQueueException();
 
         else{
-            int dequeuedItem = items[front] ;
+            int dequeueItem = items[front] ;
             front = (front + 1) % items.length;
             size--;
-            return dequeuedItem;
+            return dequeueItem;
         }
     }
 
@@ -70,7 +70,7 @@ public class Queue{
     public String toString() {
 
         if (size == 0)
-            return "[ ]" + " front: " + front + " || size: " + size + " || capacity: " + capacity;
+            return "[ ]" + " || front: " + front + " || size: " + size + " || capacity: " + capacity;
 
         String answer = "[ ";
 
@@ -80,7 +80,7 @@ public class Queue{
             answer += items[position++] + " ";
             if (position == capacity) position = 0;
         }
-        return answer + "] front: " + front + " || size: " + size + " ||capacity: " + capacity;
+        return answer + "] || front: " + front + " || size: " + size + " ||capacity: " + capacity;
     }
 
     private static class EmptyQueueException extends Exception{
@@ -116,7 +116,7 @@ public class Queue{
         System.out.println(q);
 
         while (true) {
-            System.out.println("Enter 1 to enqueue, 2 to dequeue, 3 to stop");
+            System.out.println("Enter 1 to enqueue, 2 to dequeue, 3 to stop, 4 to peek at the front of the queue");
 
             choice = console.nextInt();
 
@@ -133,6 +133,9 @@ public class Queue{
                 case 2: System.out.println(q.dequeue() + " is dequeued");
                     System.out.println(q);
                     break;
+
+                case 4:
+                    System.out.println("number the front of the queue is " + q.peek() );
 
                 default: System.out.println("Invalid input");
             }
