@@ -136,6 +136,7 @@ public class Queue{
 
                 case 4:
                     System.out.println("number the front of the queue is " + q.peek() );
+                    break;
 
                 default: System.out.println("Invalid input");
             }
