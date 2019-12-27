@@ -35,11 +35,6 @@ public class Queue{
     // front is the index of the first item on the queue
     private int front = 0;
 
-    // return the size of the queue
-    public int size() {
-        return size;
-    }
-
     public void enqueue(int item) throws FullQueueException {
 
         if (size == capacity) throw new FullQueueException();
@@ -130,7 +125,7 @@ public class Queue{
                     System.out.println(q);
                     break;
 
-                case 2: System.out.println(q.dequeue() + " is dequeued");
+                case 2: System.out.println(q.dequeue() + " is dequeue-ed");
                     System.out.println(q);
                     break;
 
